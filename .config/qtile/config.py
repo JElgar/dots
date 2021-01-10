@@ -137,7 +137,6 @@ screens = [
     Screen(
         bottom=bar.Bar(
             [
-                widget.CurrentLayout(),
                 widget.GroupBox(),
                 widget.Prompt(),
                 widget.WindowName(),
@@ -148,8 +147,12 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 widget.Systray(),
+                widget.CurrentLayout(),
                 widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                # widget.Backlight(),
+                widget.Volume(),
+                widget.Backlight(
+                    backlight_name="intel_backlight",
+                ),
                 widget.QuickExit(),
             ],
             24,
