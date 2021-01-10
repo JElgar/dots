@@ -213,7 +213,14 @@ focus_on_window_activation = "smart"
 wmname = "LG3D"
 
 # Hooks
-@hook.subscribe.startup
-def autostart():
-    mouse_enable_script = os.path.expanduser("~/.config/scripts/enable_mouse_tap.sh")
+
+
+@hook.subscribe.startup_once
+def def_setup_mouse():
+    """
+    Set up mouse trackpad
+    - Enable tap
+    - Enable natural scrolling
+    """
+    mouse_enable_script = os.path.expanduser("~/.config/scripts/trackpad_setup.sh")
     subprocess.call([mouse_enable_script])
