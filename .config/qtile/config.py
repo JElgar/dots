@@ -81,7 +81,7 @@ keys = [
     Key([mod, "control"], "r", lazy.restart(), desc="Restart qtile"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod, "control"], "d", lazy.run_extension(extension.DmenuRun())),
+    Key([mod], "d", lazy.run_extension(extension.DmenuRun())),
 ]
 
 groups = [Group(i) for i in "123456789"]
