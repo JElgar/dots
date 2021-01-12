@@ -191,3 +191,4 @@ let g:syntastic_check_on_wq = 1
 " Source other configs
 source $HOME/.config/nvim/configs/fzf.vim
 source $HOME/.config/nvim/configs/coc.vim
+source $HOME/.config/nvim/configs/fugitive.vim

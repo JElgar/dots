@@ -101,13 +101,10 @@ plugins=(
   pipenv
   yarn
   npm
-  tmux
   kubectl
   microk8s
-  python
   golang
   helm
-  fzf
 )
 
 source $ZSH/oh-my-zsh.sh
