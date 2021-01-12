@@ -30,6 +30,8 @@ export PATH
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 export LD_LIBRARY_PATH=/usr/local/include:$LD_LIBRARY_PATH
 
+export npm_config_prefix=~/.node_modules
+
 # Set defualt editor to nvim
 export VISUAL=nvim
 export EDITOR="$VISUAL"
@@ -155,6 +157,7 @@ alias c="xclip"
 alias e="emacs -nw"
 alias ls="exa"
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias bl='xbacklight -set'
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
