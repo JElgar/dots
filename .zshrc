@@ -100,7 +100,6 @@ plugins=(
   docker
   docker-compose
   flutter
-  pipenv
   yarn
   npm
   kubectl
