@@ -18,6 +18,7 @@ path+=('/home/jelgar/Documents/dev/flutter/bin')
 path+=('/home/jelgar/Documents/dev/flutter/.pub-cache/bin')
 path+=('/home/jelgar/Documents/dev/android-studio/bin')
 path+=('/home/jelgar/.npm-packages/bin')
+path+=('/home/jelgar/.node_modules/bin')
 path+=('/home/jelgar/Documents/dev/node/bin')
 path+=('/usr/lib/dart/bin')
 path+=('/home/jelgar/bin')
@@ -140,6 +141,16 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Codi
+# Usage: codi [filetype] [filename]
+codi() {
+  local syntax="${1:-python}"
+  shift
+  vim -c \
+    "let g:startify_disable_at_vimenter = 1 |\
+    Codi $syntax" "$@"
+}
+
 alias gtw="google-chrome-stable \`sed -n 1p .links\`"
 alias gtb="google-chrome-stable \`sed -n 2p .links\`"
 alias gtv="google-chrome-stable \`sed -n 3p .links\`"
@@ -159,4 +170,10 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias bl='xbacklight -set'
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+## Git
+alias gc='git commit'
+alias gch='git checkout'
+alias ga='git add'
+alias gp='git push'
 

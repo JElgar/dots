@@ -11,6 +11,10 @@
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'OmniSharp/omnisharp-vim'
+
+
 Plug 'ElmCast/elm-vim'
 
 Plug 'SirVer/ultisnips'
@@ -28,6 +32,8 @@ Plug 'vimwiki/vimwiki'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'kien/ctrlp.vim'
+Plug 'ryanoasis/vim-devicons' " File Icons
+
 
 " Pane navigation
 Plug 'christoomey/vim-tmux-navigator'
@@ -37,6 +43,9 @@ Plug 'plytophogy/vim-virtualenv'
 Plug 'PieterjanMontens/vim-pipenv'
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'tmhedberg/SimpylFold'
+
+"" Codi - Repl
+Plug 'metakirby5/codi.vim'
 
 "Latex
 Plug 'lervag/vimtex'
@@ -73,6 +82,9 @@ Plug 'alepez/vim-gtest'
 " Folding
 Plug 'Konfekt/FastFold'
 
+" Syntax highlight
+Plug 'sheerun/vim-polyglot'
+
 "Vim surround - vim commentry 
 
 call plug#end()
@@ -100,6 +112,7 @@ set relativenumber
 set tabstop=4
 set softtabstop=2 shiftwidth=2 expandtab
 set mouse=a
+set encoding=UTF-8
 
 " Colour scheme 
 set termguicolors     " enable true colors support
@@ -133,6 +146,9 @@ nmap <C-e>m <Plug>(zoom-toggle)
 " Splits
 set splitbelow
 " set splitrig
+"
+"map - // in visual to search for selection
+vnoremap // y/\V<C-R>=escape(@",'/\')<CR><CR>
 
 " Control P Setup
 let g:ctrlp_map = '<c-p>'
@@ -140,6 +156,7 @@ let g:ctrlp_map = '<c-p>'
 " Vim Wiki Setup.
 let g:vimwiki_folding='custom'
 let g:vimwiki_list = [{'path': '~/Documents/uni/Notes/', 'syntax': 'markdown', 'ext': '.Rmd'}, {'path': '~/Documents/IB/', 'syntax': 'markdown', 'ext': '.Rmd'}]
+
 " Folding
 set foldmethod=expr
 function! RmdFold()
@@ -152,6 +169,7 @@ function! RmdFold()
 				return "="
 		endif
 endfunction
+set foldlevelstart=20
 
 autocmd Filetype vimwiki setlocal foldmethod=expr foldexpr=RmdFold()
 
@@ -181,6 +199,14 @@ let g:syntastic_check_on_wq = 1
 
 "" Folding
 " let g:SimpylFold_docstring_preview = 1
+
+"" Execute selection
+xnoremap <leader>p :w !python<cr>
+
+
+" C# / Unity
+
+let OmniSharp_server_use_mono = 1
 
 " nnoremap <silent> <leader>ff za 
 " nnoremap <silent> <leader>fdo zO
