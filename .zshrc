@@ -24,6 +24,7 @@ path+=('/usr/lib/dart/bin')
 path+=('/home/jelgar/bin')
 path+=('/home/jelgar/.emacs.d/bin')
 path+=('/home/jelgar/Documents/dev/scripts')
+path+=('/home/jelgar/.config/scripts')
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
