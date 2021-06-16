@@ -13,7 +13,8 @@ ZSH_THEME="robbyrussell"
 # Startup Commands
 if [ "$TMUX" = "" ]; then tmux attach; fi
 
-export PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages/
+export FLUTTER_ROOT='/home/jelgar/Documents/dev/flutter/bin'
+export ANDROID_HOME='/home/jelgar/Android/Sdk'
 path+=('/home/jelgar/Documents/dev/flutter/bin')
 path+=('/home/jelgar/Documents/dev/flutter/.pub-cache/bin')
 path+=('/home/jelgar/Documents/dev/android-studio/bin')
@@ -108,6 +109,7 @@ plugins=(
   microk8s
   golang
   helm
+  zsh-z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -172,9 +174,13 @@ alias bl='xbacklight -set'
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
+alias python='/usr/local/bin/python3'
+
 ## Git
 alias gc='git commit'
 alias gch='git checkout'
 alias ga='git add'
 alias gp='git push'
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
