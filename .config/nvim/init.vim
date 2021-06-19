@@ -10,37 +10,23 @@
                                       
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-Plug 'OmniSharp/omnisharp-vim'
-
-
-Plug 'ElmCast/elm-vim'
-
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 
 " Colour Scheme
 Plug 'morhetz/gruvbox'
 Plug 'ap/vim-css-color'
-Plug 'ayu-theme/ayu-vim' " or other package manager
-
-" Vim Wiki
-Plug 'vimwiki/vimwiki'
 
 " File navigation
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'kien/ctrlp.vim'
-Plug 'ryanoasis/vim-devicons' " File Icons
-
 
 " Pane navigation
 Plug 'christoomey/vim-tmux-navigator'
 
 "" Python
 Plug 'plytophogy/vim-virtualenv'
-Plug 'PieterjanMontens/vim-pipenv'
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'tmhedberg/SimpylFold'
 
@@ -73,19 +59,14 @@ Plug 'tpope/vim-fugitive'
 " Vim Zoom
 Plug 'dhruvasagar/vim-zoom'
 
-"Linting
-Plug 'vim-syntastic/syntastic'
-
-" C++
-Plug 'alepez/vim-gtest'
-
 " Folding
 Plug 'Konfekt/FastFold'
 
 " Syntax highlight
 Plug 'sheerun/vim-polyglot'
 
-"Vim surround - vim commentry 
+" Doc Gen
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 
 call plug#end()
 
@@ -122,7 +103,7 @@ set termguicolors     " enable true colors support
 let gruvbox_contrast_dark="medium" " soft, medium or hard
 colorscheme gruvbox
 " colorscheme ayu
-
+"
 " Status bar colourscheme
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
@@ -203,18 +184,19 @@ let g:syntastic_check_on_wq = 1
 "" Execute selection
 xnoremap <leader>p :w !python<cr>
 
-
-" C# / Unity
-
-let OmniSharp_server_use_mono = 1
-
 " nnoremap <silent> <leader>ff za 
 " nnoremap <silent> <leader>fdo zO
 " nnoremap <silent> <leader>fdc zC
 " nnoremap <silent> <leader>fao zR
 " nnoremap <silent> <leader>fac zM
 
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+lua require'lspconfig'.pyright.setup{on_attach=require'completion'.on_attach}
+
 " Source other configs
 source $HOME/.config/nvim/configs/fzf.vim
-source $HOME/.config/nvim/configs/coc.vim
 source $HOME/.config/nvim/configs/fugitive.vim
+
+" Doc Gen
+" g:doge_doc_standard_python = "google"
