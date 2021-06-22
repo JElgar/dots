@@ -190,13 +190,10 @@ xnoremap <leader>p :w !python<cr>
 " nnoremap <silent> <leader>fao zR
 " nnoremap <silent> <leader>fac zM
 
-set completeopt=menuone,noinsert,noselect
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-lua require'lspconfig'.pyright.setup{on_attach=require'completion'.on_attach}
-
 " Source other configs
 source $HOME/.config/nvim/configs/fzf.vim
 source $HOME/.config/nvim/configs/fugitive.vim
+source $HOME/.config/nvim/configs/lsp.vim
 
 " Doc Gen
 " g:doge_doc_standard_python = "google"
