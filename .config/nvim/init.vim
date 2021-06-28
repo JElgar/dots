@@ -68,6 +68,9 @@ Plug 'sheerun/vim-polyglot'
 " Doc Gen
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 
+" Sneak
+Plug 'justinmk/vim-sneak'
+
 call plug#end()
 
 " Map leader to space
@@ -106,10 +109,10 @@ colorscheme gruvbox
 "
 " Status bar colourscheme
 let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+\ 'colorscheme': 'seoul256',
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead'
@@ -155,7 +158,7 @@ set foldlevelstart=20
 autocmd Filetype vimwiki setlocal foldmethod=expr foldexpr=RmdFold()
 
 "NERD Tree
-nnoremap <silent> <leader>d :NERDTreeToggle<Enter>
+nnoremap <silent> <C-n>:NERDTreeToggle<Enter>
 "nnoremap <silent> <Leader>e :CocCommand explorer<CR>
 let NERDTreeQuitOnOpen = 1
 let NERDTreeAutoDeleteBuffer = 1
@@ -189,6 +192,12 @@ xnoremap <leader>p :w !python<cr>
 " nnoremap <silent> <leader>fdc zC
 " nnoremap <silent> <leader>fao zR
 " nnoremap <silent> <leader>fac zM
+
+" lsp
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+lua require'lspconfig'.pyright.setup{on_attach=require'completion'.on_attach}
+
 
 " Source other configs
 source $HOME/.config/nvim/configs/fzf.vim
