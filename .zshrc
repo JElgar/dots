@@ -2,7 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/jelgar/.oh-my-zsh"
+export ME_USER="jameselgar"
+export ME_HOME="/Users/jameselgar"
+export ZSH="$ME_HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -13,24 +15,29 @@ ZSH_THEME="robbyrussell"
 # Startup Commands
 if [ "$TMUX" = "" ]; then tmux attach; fi
 
-export FLUTTER_ROOT='/home/jelgar/Documents/dev/flutter/bin'
-export ANDROID_HOME='/home/jelgar/Android/Sdk'
-path+=('/home/jelgar/Documents/dev/flutter/bin')
-path+=('/home/jelgar/Documents/dev/flutter/.pub-cache/bin')
-path+=('/home/jelgar/Documents/dev/android-studio/bin')
-path+=('/home/jelgar/.npm-packages/bin')
-path+=('/home/jelgar/.node_modules/bin')
-path+=('/home/jelgar/Documents/dev/node/bin')
-path+=('/usr/lib/dart/bin')
-path+=('/home/jelgar/bin')
-path+=('/home/jelgar/.emacs.d/bin')
-path+=('/home/jelgar/Documents/dev/scripts')
-path+=('/home/jelgar/.config/scripts')
+export FLUTTER_ROOT="$ME_HOME/Documents/dev/flutter/bin"
+export ANDROID_HOME="$ME_HOME/Android/Sdk"
+path+=("$ME_HOME/Documents/dev/flutter/bin")
+path+=("$ME_HOME/Documents/dev/flutter/.pub-cache/bin")
+path+=("$ME_HOME/Documents/dev/android-studio/bin")
+path+=("$ME_HOME/.npm-packages/bin")
+path+=("$ME_HOME/.node_modules/bin")
+path+=("/Documents/dev/node/bin")
+path+=("/usr/lib/dart/bin")
+path+=("$ME_HOME/bin")
+path+=("$ME_HOME/.emacs.d/bin")
+path+=("$ME_HOME/Documents/dev/scripts")
+path+=("$ME_HOME/.config/scripts")
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
 
-export DOCKER_HOST=unix:///run/user/1000/docker.sock
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
 export LD_LIBRARY_PATH=/usr/local/include:$LD_LIBRARY_PATH
 
 export npm_config_prefix=~/.node_modules
@@ -109,7 +116,6 @@ plugins=(
   microk8s
   golang
   helm
-  zsh-z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -164,7 +170,6 @@ alias bris-snowy="ssh snowy"
 alias bris-windows="rdesktop -u UOB\za18968 -g 1920x1020 studentremotedesktop.bris.ac.uk"
 alias cs="cd ~/CS/"
 alias logisim="java -jar ~/CS/ComputerArchitecture/Logisim/logisim-generic-2.7.1.jar"
-alias open="xdg-open"
 alias y2="cd ~/Documents/uni/Year2/"
 alias c="xclip"
 alias e="emacs -nw"
@@ -174,13 +179,10 @@ alias bl='xbacklight -set'
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-alias python='/usr/local/bin/python3'
-
 ## Git
 alias gc='git commit'
 alias gch='git checkout'
 alias ga='git add'
 alias gp='git push'
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
