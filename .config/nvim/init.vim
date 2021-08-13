@@ -71,6 +71,20 @@ Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 " Sneak
 Plug 'justinmk/vim-sneak'
 
+" CSV
+Plug 'chrisbra/csv.vim'
+
+"" Scary frontend world
+" JavaScript support
+Plug 'pangloss/vim-javascript'
+" TypeScript and TypeScriptReact syntax
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+" JS and JSX syntax
+Plug 'maxmellon/vim-jsx-pretty'
+" GraphQL syntax
+Plug 'jparise/vim-graphql'
+
 call plug#end()
 
 " Map leader to space
@@ -105,6 +119,7 @@ set termguicolors     " enable true colors support
 "let ayucolor="dark"   " for dark version of theme
 let gruvbox_contrast_dark="medium" " soft, medium or hard
 colorscheme gruvbox
+highlight Pmenu ctermbg=black guibg=#1f2937
 " colorscheme ayu
 "
 " Status bar colourscheme
