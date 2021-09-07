@@ -85,6 +85,14 @@ Plug 'maxmellon/vim-jsx-pretty'
 " GraphQL syntax
 Plug 'jparise/vim-graphql'
 
+" Debugging
+Plug 'puremourning/vimspector'
+
+"""" Other """"
+Plug 'szw/vim-maximizer'
+" For moving around func args
+Plug 'PeterRincker/vim-argumentative'
+
 call plug#end()
 
 " Map leader to space
@@ -221,3 +229,6 @@ source $HOME/.config/nvim/configs/lsp.vim
 
 " Doc Gen
 " g:doge_doc_standard_python = "google"
+
+" Debugging
+let g:vimspector_install_gadgets = [ 'debugpy' ]
