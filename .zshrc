@@ -1,9 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Config constants 
+export ME_USER="jelgar"
+export ME_HOME="/home/$USER"
+export OS="linux"
+
 # Path to your oh-my-zsh installation.
-export ME_USER="jameselgar"
-export ME_HOME="/Users/jameselgar"
 export ZSH="$ME_HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -28,6 +31,7 @@ path+=("$ME_HOME/bin")
 path+=("$ME_HOME/.emacs.d/bin")
 path+=("$ME_HOME/Documents/dev/scripts")
 path+=("$ME_HOME/.config/scripts")
+path+=("$ME_HOME/.local/share/gem/ruby/3.0.0/bin")
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
@@ -35,8 +39,12 @@ export PATH
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+
+# If os is mac then try using pyenv
+if [ "$OS" = "mac" ]; then
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+fi
 
 export LD_LIBRARY_PATH=/usr/local/include:$LD_LIBRARY_PATH
 
@@ -116,6 +124,9 @@ plugins=(
   microk8s
   golang
   helm
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+  z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -186,3 +197,6 @@ alias ga='git add'
 alias gp='git push'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

@@ -40,7 +40,8 @@ Plug 'lervag/vimtex'
 Plug 'itchyny/lightline.vim'
 
 " Flutter
-Plug 'dart-lang/dart-vim-plugin'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'akinsho/flutter-tools.nvim'
 
 " Lorem Ipsum
 Plug 'vim-scripts/loremipsum'
@@ -205,4 +206,4 @@ source $HOME/.config/nvim/configs/fugitive.vim
 source $HOME/.config/nvim/configs/lsp.vim
 
 " Doc Gen
-" g:doge_doc_standard_python = "google"
+let g:doge_doc_standard_python = "google"
