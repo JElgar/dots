@@ -32,6 +32,7 @@ path+=("$ME_HOME/.emacs.d/bin")
 path+=("$ME_HOME/Documents/dev/scripts")
 path+=("$ME_HOME/.config/scripts")
 path+=("$ME_HOME/.local/share/gem/ruby/3.0.0/bin")
+path+=("/usr/local/go/bin")
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
@@ -131,7 +132,8 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-export "GOROOT=/usr/local/go"
+# export "GOROOT=/usr/local/go"
+
 export "GOPATH=$HOME/Documents/dev/go"
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 

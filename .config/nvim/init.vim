@@ -12,7 +12,14 @@ call plug#begin('~/.config/nvim/plugged')
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+"" Snippets - setup
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+"" Snippets - snippets data
+Plug 'golang/vscode-go'
 
 " Colour Scheme
 Plug 'morhetz/gruvbox'
@@ -72,6 +79,28 @@ Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
 " Sneak
 Plug 'justinmk/vim-sneak'
 
+" CSV
+Plug 'chrisbra/csv.vim'
+
+"" Scary frontend world
+" JavaScript support
+Plug 'pangloss/vim-javascript'
+" TypeScript and TypeScriptReact syntax
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+" JS and JSX syntax
+Plug 'maxmellon/vim-jsx-pretty'
+" GraphQL syntax
+Plug 'jparise/vim-graphql'
+
+" Debugging
+Plug 'puremourning/vimspector'
+
+"""" Other """"
+Plug 'szw/vim-maximizer'
+" For moving around func args
+Plug 'PeterRincker/vim-argumentative'
+
 call plug#end()
 
 " Map leader to space
@@ -106,6 +135,7 @@ set termguicolors     " enable true colors support
 "let ayucolor="dark"   " for dark version of theme
 let gruvbox_contrast_dark="medium" " soft, medium or hard
 colorscheme gruvbox
+highlight Pmenu ctermbg=black guibg=#1f2937
 " colorscheme ayu
 "
 " Status bar colourscheme
@@ -194,12 +224,6 @@ xnoremap <leader>p :w !python<cr>
 " nnoremap <silent> <leader>fao zR
 " nnoremap <silent> <leader>fac zM
 
-" lsp
-set completeopt=menuone,noinsert,noselect
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-lua require'lspconfig'.pyright.setup{on_attach=require'completion'.on_attach}
-
-
 " Source other configs
 source $HOME/.config/nvim/configs/fzf.vim
 source $HOME/.config/nvim/configs/fugitive.vim
@@ -207,3 +231,6 @@ source $HOME/.config/nvim/configs/lsp.vim
 
 " Doc Gen
 let g:doge_doc_standard_python = "google"
+
+" Debugging
+let g:vimspector_install_gadgets = [ 'debugpy' ]
