@@ -53,10 +53,9 @@ Plug 'akinsho/flutter-tools.nvim'
 " Lorem Ipsum
 Plug 'vim-scripts/loremipsum'
 
-" FZF
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-rooter'
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Markdown
 Plug 'JamshedVesuna/vim-markdown-preview'
@@ -107,10 +106,6 @@ call plug#end()
 nnoremap <SPACE> <Nop>
 let mapleader=" "
 let maplocalleader=","
-
-" fzf mapping
-nmap <leader><leader> fzf#vim#complete#path('fd')
-nmap <leader><s> fzf#vim#complete#path('fd')
 
 
 " Use Control A as Escape
@@ -200,6 +195,7 @@ let NERDTreeDirArrows = 1
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " Python
+let g:python3_host_prog = '/bin/python'
 
 "" Format on save
 autocmd BufWritePre *.py execute ':Black'
@@ -228,6 +224,18 @@ xnoremap <leader>p :w !python<cr>
 source $HOME/.config/nvim/configs/fzf.vim
 source $HOME/.config/nvim/configs/fugitive.vim
 source $HOME/.config/nvim/configs/lsp.vim
+source $HOME/.config/nvim/configs/lsp.vim
+
+lua <<EOF
+	require("telescope_config").setup()
+EOF
+
+"" Telescope bindings
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fc <cmd>lua require('telescope.actions').close()<cr>
 
 " Doc Gen
 let g:doge_doc_standard_python = "google"
