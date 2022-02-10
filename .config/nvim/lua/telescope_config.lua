@@ -20,7 +20,7 @@ local default = {
             ["jk"] = require('telescope.actions').close,
          },
       },
-      prompt_prefix = "   ",
+      prompt_prefix = " 🔭 ",
       selection_caret = "  ",
       entry_prefix = "  ",
       initial_mode = "insert",
