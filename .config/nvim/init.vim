@@ -81,6 +81,9 @@ Plug 'justinmk/vim-sneak'
 " CSV
 Plug 'chrisbra/csv.vim'
 
+" Copilot
+Plug 'github/copilot.vim'
+
 "" Scary frontend world
 " JavaScript support
 Plug 'pangloss/vim-javascript'
