@@ -39,13 +39,9 @@ export PATH
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
-# If os is mac then try using pyenv
-if [ "$OS" = "mac" ]; then
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-fi
+export PATH="$PYENV_ROOT:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
 
 export LD_LIBRARY_PATH=/usr/local/include:$LD_LIBRARY_PATH
 
@@ -193,6 +189,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 ## Git
+alias gs='git status'
 alias gc='git commit'
 alias gch='git checkout'
 alias ga='git add'

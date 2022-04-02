@@ -37,6 +37,9 @@ Plug 'plytophogy/vim-virtualenv'
 Plug 'psf/black', { 'branch': 'stable' }
 Plug 'tmhedberg/SimpylFold'
 
+"" Java
+Plug 'mfussenegger/nvim-jdtls'
+
 "" Codi - Repl
 Plug 'metakirby5/codi.vim'
 
@@ -58,7 +61,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Markdown
-Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -239,6 +242,7 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>fc <cmd>lua require('telescope.actions').close()<cr>
+nnoremap <leader>fd <cmd>NERDTreeToggle<Enter>
 
 " Doc Gen
 let g:doge_doc_standard_python = "google"
