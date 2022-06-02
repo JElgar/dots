@@ -87,6 +87,10 @@ Plug 'chrisbra/csv.vim'
 " Copilot
 Plug 'github/copilot.vim'
 
+" Org mode
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-orgmode/orgmode'
+
 "" Scary frontend world
 " JavaScript support
 Plug 'pangloss/vim-javascript'
@@ -234,6 +238,7 @@ source $HOME/.config/nvim/configs/lsp.vim
 
 lua <<EOF
 	require("telescope_config").setup()
+	require("org").setup()
 EOF
 
 "" Telescope bindings
