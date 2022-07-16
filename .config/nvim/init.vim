@@ -11,10 +11,12 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " LSP
+Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
+
 "" Snippets - setup
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
@@ -89,7 +91,7 @@ Plug 'github/copilot.vim'
 
 " Org mode
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-orgmode/orgmode'
+" Plug 'nvim-orgmode/orgmode'
 
 "" Scary frontend world
 " JavaScript support
@@ -109,6 +111,8 @@ Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
 " For moving around func args
 Plug 'PeterRincker/vim-argumentative'
+" Center single buffer
+Plug 'smithbm2316/centerpad.nvim'
 
 call plug#end()
 
@@ -205,7 +209,7 @@ let NERDTreeDirArrows = 1
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 " Python
-let g:python3_host_prog = '/bin/python'
+" let g:python3_host_prog = '/bin/python'
 
 "" Format on save
 autocmd BufWritePre *.py execute ':Black'
@@ -234,11 +238,10 @@ xnoremap <leader>p :w !python<cr>
 source $HOME/.config/nvim/configs/fzf.vim
 source $HOME/.config/nvim/configs/fugitive.vim
 source $HOME/.config/nvim/configs/lsp.vim
-source $HOME/.config/nvim/configs/lsp.vim
 
 lua <<EOF
 	require("telescope_config").setup()
-	require("org").setup()
+	-- require("org").setup()
 EOF
 
 "" Telescope bindings

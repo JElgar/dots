@@ -2,9 +2,15 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Config constants 
-export ME_USER="jelgar"
-export ME_HOME="/home/$USER"
-export OS="linux"
+export ME_USER="jnelgar"
+export ME_HOME="/Users/$USER"
+export OS="mac"
+
+if [ -f ~/.zshrc-local ]; then
+    source ~/.zshrc-local
+else
+    print "404: ~/.zshrc-local not found."
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$ME_HOME/.oh-my-zsh"
@@ -20,6 +26,7 @@ if [ "$TMUX" = "" ]; then tmux attach; fi
 
 export FLUTTER_ROOT="$ME_HOME/Documents/dev/flutter/bin"
 export ANDROID_HOME="$ME_HOME/Android/Sdk"
+
 path+=("$ME_HOME/Documents/dev/flutter/bin")
 path+=("$ME_HOME/Documents/dev/flutter/.pub-cache/bin")
 path+=("$ME_HOME/Documents/dev/android-studio/bin")

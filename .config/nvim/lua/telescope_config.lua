@@ -3,7 +3,6 @@
 -- if not present then
 --    return
 -- end
-
 local default = {
    defaults = {
       vimgrep_arguments = {
@@ -72,6 +71,8 @@ M.setup = function()
          telescope.load_extension(ext)
       end
    end)
+
+   vim.api.nvim_set_keymap("n", "gr", "<cmd> Telescope lsp_references theme=get_dropdown<CR>", {noremap=true, silent=true})
 end
 
 return M
