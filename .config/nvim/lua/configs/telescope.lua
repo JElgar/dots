@@ -1,8 +1,5 @@
--- local present, telescope = pcall(require, "telescope")
+local _, telescope = pcall(require, "telescope")
 
--- if not present then
---    return
--- end
 local default = {
    defaults = {
       vimgrep_arguments = {
@@ -57,22 +54,34 @@ local default = {
    },
 }
 
-local M = {}
-M.setup = function()
-   -- if override_flag then
-   --    default = require("core.utils").tbl_override_req("telescope", default)
-   -- end
-   require("telescope").setup(default)
+local function setup()
+   	require("telescope").setup(default)
 
-   local extensions = { "themes", "terms" }
+   	local extensions = { "themes", "terms" }
 
-   pcall(function()
-      for _, ext in ipairs(extensions) do
-         telescope.load_extension(ext)
-      end
-   end)
-
-   vim.api.nvim_set_keymap("n", "gr", "<cmd> Telescope lsp_references theme=get_dropdown<CR>", {noremap=true, silent=true})
+   	pcall(function()
+   	   for _, ext in ipairs(extensions) do
+   	      telescope.load_extension(ext)
+   	   end
+   	end)
 end
 
-return M
+local function keybindings (bindkey)
+	bindkey("n", "gr", "<cmd> Telescope lsp_references<cr>")
+   	bindkey("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
+	bindkey("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
+	bindkey("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
+	bindkey("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>")
+	bindkey("n", "<leader>fc", "<cmd>lua require('telescope.actions').close()<cr>")
+end
+
+return {
+	packages = function(use)
+		use {
+			'nvim-telescope/telescope.nvim', tag = '0.1.0',
+  			requires = { 'nvim-lua/plenary.nvim' }
+		}
+	end,
+	setup = setup,
+	keybindings = keybindings,
+}
