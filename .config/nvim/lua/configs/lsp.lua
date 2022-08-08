@@ -109,9 +109,15 @@ local function setup()
 		local opts = make_config(ls)
 		lspconfig[ls].setup(opts)
 	end
+
+	vim.g.vsnip_filetypes = {
+		typescriptreact = {'typescript'},
+		javascriptreact = {'javascript'},
+	}
 end
 
 return {
+	on_attach = on_attach,
 	packages = function(use)
 		use {
 			-- LSP
@@ -126,7 +132,9 @@ return {
 			'hrsh7th/cmp-buffer',
 
 			-- Snippets 
-			'hrsh7th/cmp-vsnip',
+			'hrsh7th/vim-vsnip',
+			'hrsh7th/vim-vsnip-integ',
+			'rafamadriz/friendly-snippets',
 		}
 	end,
 	setup = setup,

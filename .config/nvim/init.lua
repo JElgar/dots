@@ -8,7 +8,7 @@ end
 local packer_bootstrap = require('packer-setup').setup()
 
 -- A config returns a packages and setup function 
-local configs = {'configs.lsp', 'configs.tree', 'configs.theme', 'configs.telescope'}
+local configs = {'configs.lsp', 'configs.tree', 'configs.theme', 'configs.telescope', 'configs.flutter'}
 
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
@@ -44,3 +44,6 @@ keymap('', '<Space>', '<Nop>')
 keymap('', '<C-e>', '<C-w>')
 
 vim.opt.mouse = 'a'
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
