@@ -1,14 +1,8 @@
--- Setup mason (lsp installer)
-require('mason').setup()
-require('mason-lspconfig').setup({
-	ensure_installed = { 'sumneko_lua', 'rust_analyzer', 'pyright', 'tsserver' }
-})
-
--- Use an on_attach function to only map the following keys 
+-- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
 	-- Mappings.
-	local opts = { noremap=true, silent=true }
+	local opts = { noremap = true, silent = true }
 	local args = {
 	}
 	local function map_buf(mode, key, command) vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, opts) end
@@ -29,57 +23,56 @@ local on_attach = function(client, bufnr)
 	map_buf('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 	map_buf('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
 	map_buf('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
-	map_buf('n', '<space>F', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+	map_buf('n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
 	-- Language Specific
-	-- if (client.name == 'eslint') then
-	-- 	-- Enable formatting for eslintls
-	-- 	client.resolved_capabilities.document_formatting = true
-	-- end
+	client.resolved_capabilities.document_formatting = true
 end
 
--- Setup nvim-cmp (auto complete)
-local cmp = require'cmp'
+local function setup_cmp()
+	-- Setup nvim-cmp (auto complete)
+	local cmp = require 'cmp'
 
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      -- For `vsnip` user.
-      vim.fn['vsnip#anonymous'](args.body)
+	cmp.setup({
+		snippet = {
+			expand = function(args)
+				-- For `vsnip` user.
+				vim.fn['vsnip#anonymous'](args.body)
 
-      -- For `luasnip` user.
-      -- require('luasnip').lsp_expand(args.body)
+				-- For `luasnip` user.
+				-- require('luasnip').lsp_expand(args.body)
 
-      -- For `ultisnips` user.
-      -- vim.fn["UltiSnips#Anon"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-    ['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item()),
-    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item()),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
+				-- For `ultisnips` user.
+				-- vim.fn["UltiSnips#Anon"](args.body)
+			end,
+		},
+		mapping = {
+			['<C-j>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+			['<C-k>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+			['<C-d>'] = cmp.mapping.scroll_docs(-4),
+			['<C-f>'] = cmp.mapping.scroll_docs(4),
+			['<C-Space>'] = cmp.mapping.complete(),
+			['<C-e>'] = cmp.mapping.close(),
+			['<CR>'] = cmp.mapping.confirm({ select = true }),
+			['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item()),
+			['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item()),
+		},
+		sources = {
+			{ name = 'nvim_lsp' },
 
-    -- For vsnip user.
-    { name = 'vsnip' },
+			-- For vsnip user.
+			{ name = 'vsnip' },
 
-    -- For luasnip user.
-    -- { name = 'luasnip' },
+			-- For luasnip user.
+			-- { name = 'luasnip' },
 
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
+			-- For ultisnips user.
+			-- { name = 'ultisnips' },
 
-    { name = 'buffer' },
-  }
-})
+			{ name = 'buffer' },
+		}
+	})
+end
 
 local function make_config(server_name)
 	-- Setup base config for each server.
@@ -90,9 +83,9 @@ local function make_config(server_name)
 
 	-- Merge user-defined lsp settings.
 	-- These can be overridden locally by lua/lsp-local/<server_name>.lua
-	local exists, module = pcall(require, 'lsp-local.'..server_name)
+	local exists, module = pcall(require, 'lsp-local.' .. server_name)
 	if not exists then
-		exists, module = pcall(require, 'lsp.'..server_name)
+		exists, module = pcall(require, 'lsp.' .. server_name)
 	end
 	if exists then
 		local user_config = module.config(c)
@@ -103,6 +96,14 @@ local function make_config(server_name)
 end
 
 local function setup()
+	-- Setup mason (lsp installer)
+	require('mason').setup()
+	require('mason-lspconfig').setup({
+		ensure_installed = { 'sumneko_lua', 'rust_analyzer', 'pyright', 'tsserver' }
+	})
+
+	setup_cmp()
+
 	local packages = require('mason-lspconfig').get_installed_servers()
 	local lspconfig = require('lspconfig')
 	for _, ls in pairs(packages) do
@@ -111,8 +112,8 @@ local function setup()
 	end
 
 	vim.g.vsnip_filetypes = {
-		typescriptreact = {'typescript'},
-		javascriptreact = {'javascript'},
+		typescriptreact = { 'typescript' },
+		javascriptreact = { 'javascript' },
 	}
 end
 
@@ -121,17 +122,17 @@ return {
 	packages = function(use)
 		use {
 			-- LSP
-    			'neovim/nvim-lspconfig',
-    			'williamboman/mason.nvim',
-    			'williamboman/mason-lspconfig.nvim',
+			'neovim/nvim-lspconfig',
+			'williamboman/mason.nvim',
+			'williamboman/mason-lspconfig.nvim',
 
-			-- Complete 
+			-- Complete
 			'hrsh7th/nvim-cmp',
 			'hrsh7th/cmp-nvim-lsp',
 			'hrsh7th/cmp-nvim-lua',
 			'hrsh7th/cmp-buffer',
 
-			-- Snippets 
+			-- Snippets
 			'hrsh7th/vim-vsnip',
 			'hrsh7th/vim-vsnip-integ',
 			'rafamadriz/friendly-snippets',

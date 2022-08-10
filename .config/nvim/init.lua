@@ -12,7 +12,7 @@ local configs = {'configs.lsp', 'configs.tree', 'configs.theme', 'configs.telesc
 
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
-
+	
 	-- Setup all the configs
 	for _, config in pairs(configs) do
 		local mod = require(config)
@@ -33,7 +33,7 @@ require('packer').startup(function(use)
 	-- Extra dependencies
 	-- TMUX navigation
 	use 'christoomey/vim-tmux-navigator'
-
+	
 	if packer_bootstrap then
     		require('packer').sync()
   	end
