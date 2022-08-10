@@ -1,14 +1,14 @@
 vim.g.mapleader = ' '
 
-local opts = {noremap = true, silent = true}
 local function keymap(mode, key, command)
+	local opts = {noremap = true, silent = true}
 	vim.api.nvim_set_keymap(mode, key, command, opts)
 end
 
 local packer_bootstrap = require('packer-setup').setup()
 
 -- A config returns a packages and setup function 
-local configs = {'configs.lsp', 'configs.tree', 'configs.theme', 'configs.telescope', 'configs.flutter'}
+local configs = {'configs.lsp', 'configs.tree', 'configs.theme', 'configs.telescope', 'configs.flutter', 'configs.dap', 'configs.test'}
 
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
