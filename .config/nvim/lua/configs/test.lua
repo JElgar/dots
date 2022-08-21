@@ -31,6 +31,7 @@ return {
     keybindings = function(bindkey)
         bindkey("", "<leader>tr", "<cmd>lua require('neotest').run.run()<cr>")
         bindkey("", "<leader>td", "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>")
+        bindkey("", "<leader>tf", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>")
         bindkey("", "<leader>ts", "<cmd>lua require('neotest').summary.open()<cr>")
     end,
 }
