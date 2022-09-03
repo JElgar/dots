@@ -79,7 +79,8 @@ return {
         bindkey("", "<leader>dq", "<cmd>lua require('dapui').close()<cr>")
         bindkey("", "<leader>dc", "<cmd>DapContinue<cr>")
         bindkey("", "<leader>db", "<cmd>DapToggleBreakpoint<cr>")
-        bindkey("", "<leader>ds", "<cmd>DapStepInto<cr>")
+        bindkey("", "<leader>dso", "<cmd>lua require('dap').step_over()<cr>")
+        bindkey("", "<leader>dsi", "<cmd>lua require('dap').step_into()<cr>")
         bindkey("", "<leader>de", "<cmd>lua require('dapui').eval()<cr>")
     end,
 }

@@ -17,7 +17,7 @@ vim.cmd([[
 
 -- A config returns a packages and setup function
 local configs = { 'configs.lsp', 'configs.treesitter', 'configs.test', 'configs.tree', 'configs.theme',
-    'configs.telescope', 'configs.flutter', 'configs.dap', 'configs.utils' }
+    'configs.telescope', 'configs.flutter', 'configs.dap', 'configs.utils', 'configs.vimwiki' }
 
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'

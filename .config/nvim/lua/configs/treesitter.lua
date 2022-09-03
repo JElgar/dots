@@ -28,6 +28,7 @@ return {
             "nvim-treesitter/nvim-treesitter",
             config = setup
         })
+        use("romgrk/nvim-treesitter-context")
     end,
     keybindings = function(bindkey)
     end,
