@@ -2,9 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Config constants 
-export ME_USER="jnelgar"
-export ME_HOME="/Users/$USER"
-export OS="mac"
+export ME_USER="jelgar"
+export ME_HOME="/home/$USER"
+export OS="linux"
 
 if [ -f ~/.zshrc-local ]; then
     source ~/.zshrc-local

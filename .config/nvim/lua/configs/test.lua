@@ -9,6 +9,7 @@ return {
                 "haydenmeade/neotest-jest",
                 "nvim-neotest/neotest-python",
                 "rouge8/neotest-rust",
+                "sidlatau/neotest-dart",
             },
         })
     end,
@@ -18,13 +19,17 @@ return {
                 require("neotest-python"),
                 require("neotest-rust"),
                 require("neotest-jest")({
-                	jestCommand = "npm test --",
-                  	jestConfigFile = "custom.jest.config.ts",
-                  	env = { CI = true },
-                  	cwd = function(path)
-                		return vim.fn.getcwd()
-                  	end,
+                    jestCommand = "npm test --",
+                    jestConfigFile = "custom.jest.config.ts",
+                    env = { CI = true },
+                    cwd = function(path)
+                        return vim.fn.getcwd()
+                    end,
                 }),
+                require('neotest-dart') {
+                    -- change it to `dart` for Dart only tests
+                    command = 'flutter',
+                },
             },
         })
     end,

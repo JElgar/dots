@@ -5,7 +5,8 @@ return {
             { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
         }
 
-        -- vscode js debug
+        -- There is currently no support for vscode-js-debug in Mason, once
+        -- there is this should no longer be required.
         use {
             "microsoft/vscode-js-debug",
             opt = true,

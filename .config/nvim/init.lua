@@ -51,6 +51,7 @@ end)
 keymap('i', 'jk', '<ESC>')
 keymap('', '<Space>', '<Nop>')
 keymap('', '<C-e>', '<C-w>')
+keymap('x', '<leader>p', '"_dP')
 
 vim.opt.mouse = 'a'
 vim.opt.tabstop = 4
