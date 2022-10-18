@@ -13,7 +13,7 @@ else
 fi
 
 # Path to your oh-my-zsh installation.
-export ZSH="$ME_HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -24,21 +24,21 @@ ZSH_THEME="robbyrussell"
 # Startup Commands
 if [ "$TMUX" = "" ]; then tmux attach; fi
 
-export FLUTTER_ROOT="$ME_HOME/Documents/dev/flutter/bin"
-export ANDROID_HOME="$ME_HOME/Android/Sdk"
+export FLUTTER_ROOT="$HOME/Documents/dev/flutter/bin"
+export ANDROID_HOME="$HOME/Android/Sdk"
 
-path+=("$ME_HOME/Documents/dev/flutter/bin")
-path+=("$ME_HOME/Documents/dev/flutter/.pub-cache/bin")
-path+=("$ME_HOME/Documents/dev/android-studio/bin")
-path+=("$ME_HOME/.npm-packages/bin")
-path+=("$ME_HOME/.node_modules/bin")
+path+=("$HOME/Documents/dev/flutter/bin")
+path+=("$HOME/Documents/dev/flutter/.pub-cache/bin")
+path+=("$HOME/Documents/dev/android-studio/bin")
+path+=("$HOME/.npm-packages/bin")
+path+=("$HOME/.node_modules/bin")
 path+=("/Documents/dev/node/bin")
 path+=("/usr/lib/dart/bin")
-path+=("$ME_HOME/bin")
-path+=("$ME_HOME/.emacs.d/bin")
-path+=("$ME_HOME/Documents/dev/scripts")
-path+=("$ME_HOME/.config/scripts")
-path+=("$ME_HOME/.local/share/gem/ruby/3.0.0/bin")
+path+=("$HOME/bin")
+path+=("$HOME/.emacs.d/bin")
+path+=("$HOME/Documents/dev/scripts")
+path+=("$HOME/.config/scripts")
+path+=("$HOME/.local/share/gem/ruby/3.0.0/bin")
 path+=("/usr/local/go/bin")
 
 # path+=('/home/james/Development/elm/bin')
@@ -206,3 +206,8 @@ alias gp='git push'
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# pnpm
+export PNPM_HOME="/home/jelgar/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
