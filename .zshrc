@@ -40,6 +40,7 @@ path+=("$HOME/Documents/dev/scripts")
 path+=("$HOME/.config/scripts")
 path+=("$HOME/.local/share/gem/ruby/3.0.0/bin")
 path+=("/usr/local/go/bin")
+path+=("$HOME/.pub-cache/bin")
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
