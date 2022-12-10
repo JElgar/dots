@@ -19,14 +19,14 @@ local on_attach = function(client, bufnr)
 	map_buf('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 	map_buf('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 	map_buf('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-	map_buf('n', '<space>E', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+	map_buf('n', '<space>E', '<cmd>lua vim.diagnostic.open_float(0, { scope = "line", border = "single" })<CR>')
 	map_buf('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 	map_buf('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 	map_buf('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 	map_buf('n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
 	-- Language Specific
-	client.resolved_capabilities.document_formatting = true
+	client.server_capabilities.document_formatting = true
 end
 
 local function setup_cmp()
@@ -79,7 +79,7 @@ local function make_config(server_name)
 	local c = {}
 	c.on_attach = on_attach
 	local cap = vim.lsp.protocol.make_client_capabilities()
-	c.capabilities = require('cmp_nvim_lsp').update_capabilities(cap)
+	c.capabilities = require('cmp_nvim_lsp').default_capabilities(cap)
 
 	-- Merge user-defined lsp settings.
 	-- These can be overridden locally by lua/lsp-local/<server_name>.lua
@@ -115,6 +115,23 @@ local function setup()
 		typescriptreact = { 'typescript' },
 		javascriptreact = { 'javascript' },
 	}
+
+    -- Metals config setup
+    local metals_config = require("metals").bare_config()
+    metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    -- Autocmd that will actually be in charging of starting the whole thing
+    local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+    vim.api.nvim_create_autocmd("FileType", {
+      -- NOTE: You may or may not want java included here. You will need it if you
+      -- want basic Java support but it may also conflict if you are using
+      -- something like nvim-jdtls which also works on a java filetype autocmd.
+      pattern = { "scala", "sbt", "java" },
+      callback = function()
+        require("metals").initialize_or_attach(metals_config)
+      end,
+      group = nvim_metals_group,
+    })
 end
 
 return {
@@ -137,6 +154,7 @@ return {
 			'hrsh7th/vim-vsnip-integ',
 			'rafamadriz/friendly-snippets',
 		}
+        use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
 	end,
 	setup = setup,
 }
