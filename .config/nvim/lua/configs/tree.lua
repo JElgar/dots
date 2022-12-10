@@ -8,7 +8,11 @@ return {
 		}
 	end,
 	setup = function()
-		require("nvim-tree").setup()
+		require("nvim-tree").setup({
+            filters = {
+                dotfiles = true,
+            },
+        })
 	end,
 	keybindings = function (bindkey)
 		bindkey("n", "<leader>fd", "<cmd>NvimTreeToggle<Enter>")

@@ -20,8 +20,8 @@ local on_attach = function(client, bufnr)
 	map_buf('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 	map_buf('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 	map_buf('n', '<space>E', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
-	map_buf('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-	map_buf('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+	map_buf('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+	map_buf('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 	map_buf('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
 	map_buf('n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
@@ -99,7 +99,7 @@ local function setup()
 	-- Setup mason (lsp installer)
 	require('mason').setup()
 	require('mason-lspconfig').setup({
-		ensure_installed = { 'sumneko_lua', 'rust_analyzer', 'pyright', 'tsserver' }
+		ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'pyright', 'tsserver' }
 	})
 
 	setup_cmp()
