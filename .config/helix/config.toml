@@ -1,0 +1,11 @@
+theme = "gruvbox_dark_hard"
+
+[editor]
+true-color = true
+color-modes = true
+line-number = "relative"
+mouse = true
+shell = ["zsh", "-c"]
+
+[keys.insert]
+j = { k = "normal_mode" } # Maps `jk` to exit insert mode
