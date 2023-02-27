@@ -212,3 +212,5 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PNPM_HOME="/home/jelgar/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+
+if [ -e /home/jelgar/.nix-profile/etc/profile.d/nix.sh ]; then . /home/jelgar/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

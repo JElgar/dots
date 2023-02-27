@@ -17,12 +17,12 @@ vim.cmd([[
 
 -- A config returns a packages and setup function
 local configs = { 'configs.lsp', 'configs.treesitter', 'configs.test', 'configs.tree', 'configs.theme',
-    'configs.telescope', 'configs.flutter', 'configs.dap', 'configs.utils', 'configs.vimwiki', 'configs.git' }
+    'configs.telescope', 'configs.flutter', 'configs.dap', 'configs.utils', 'configs.vimwiki', 'configs.git', 'configs.copilot' }
 
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
-    -- Setup all the configs
+    -- Install all the packages first
     for _, config in pairs(configs) do
         local mod = require(config)
         if not mod then
@@ -31,6 +31,10 @@ require('packer').startup(function(use)
         if mod.packages then
             mod.packages(use)
         end
+    end
+    -- Run setup for all configs
+    for _, config in pairs(configs) do
+        local mod = require(config)
         if mod.setup then
             mod.setup()
         end
@@ -50,7 +54,6 @@ end)
 
 keymap('i', 'jk', '<ESC>')
 keymap('', '<Space>', '<Nop>')
-keymap('', '<C-e>', '<C-w>')
 keymap('x', '<leader>p', '"_dP')
 
 vim.opt.mouse = 'a'
