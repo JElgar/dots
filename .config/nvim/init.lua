@@ -32,6 +32,7 @@ require('packer').startup(function(use)
             mod.packages(use)
         end
     end
+
     -- Run setup for all configs
     for _, config in pairs(configs) do
         local mod = require(config)

@@ -191,7 +191,7 @@ alias y2="cd ~/Documents/uni/Year2/"
 alias c="xclip"
 alias e="emacs -nw"
 alias ls="exa"
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias bl='xbacklight -set'
 export PATH="$HOME/.rbenv/bin:$PATH"
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
