@@ -8,8 +8,6 @@ export OS="linux"
 
 if [ -f ~/.zshrc-local ]; then
     source ~/.zshrc-local
-else
-    print "404: ~/.zshrc-local not found."
 fi
 
 # Path to your oh-my-zsh installation.
@@ -22,7 +20,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 
 # Startup Commands
-if [ "$TMUX" = "" ]; then tmux attach; fi
+if [ "$TMUX" = "" ]; then tmux new -As0; fi
 
 export FLUTTER_ROOT="$HOME/Documents/dev/flutter/bin"
 export ANDROID_HOME="$HOME/Android/Sdk"
@@ -44,12 +42,6 @@ path+=("$HOME/.pub-cache/bin")
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
-
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
 
 export LD_LIBRARY_PATH=/usr/local/include:$LD_LIBRARY_PATH
 
@@ -129,8 +121,8 @@ plugins=(
   microk8s
   golang
   helm
-  zsh-syntax-highlighting
-  zsh-autosuggestions
+  # zsh-syntax-highlighting
+  # zsh-autosuggestions
   z
 )
 
@@ -210,7 +202,10 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # pnpm
 export PNPM_HOME="/home/jelgar/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 # pnpm end
 
 if [ -e /home/jelgar/.nix-profile/etc/profile.d/nix.sh ]; then . /home/jelgar/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

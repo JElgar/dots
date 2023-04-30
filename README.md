@@ -12,6 +12,9 @@ Clone the repo
 
 `git clone --bare git@github.com:JElgar/dots.git $HOME/.dotfiles`
 
+(Optional) Hide untracked files in git status
+`git config --local status.showUntrackedFiles no`
+
 Checkout the content 
 ```bash
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
