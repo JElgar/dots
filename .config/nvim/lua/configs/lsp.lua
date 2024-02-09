@@ -3,27 +3,26 @@
 local on_attach = function(client, bufnr)
 	-- Mappings.
 	local opts = { noremap = true, silent = true }
-	local args = {
-	}
-	local function map_buf(mode, key, command) vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, opts) end
+	local args = {}
+	local function map_key(mode, key, command) vim.keymap.set(mode, key, command, opts) end
 
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	map_buf('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
-	map_buf('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
-	map_buf('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
-	map_buf('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-	map_buf('n', '<space>K', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
-	map_buf('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
-	map_buf('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
-	map_buf('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
-	map_buf('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-	map_buf('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-	map_buf('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-	map_buf('n', '<space>E', '<cmd>lua vim.diagnostic.open_float(0, { scope = "line", border = "single" })<CR>')
-	map_buf('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-	map_buf('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-	map_buf('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
-	map_buf('n', ',f', '<cmd>lua vim.lsp.buf.formatting()<CR>')
+	map_key('n', 'gD', vim.lsp.buf.declaration)
+	map_key('n', 'gd', vim.lsp.buf.definition)
+	map_key('n', 'K', vim.lsp.buf.hover)
+	map_key('n', 'gi', vim.lsp.buf.implementation)
+	map_key('n', '<C-k>', vim.lsp.buf.signature_help)
+	map_key('n', '<space>wa', vim.lsp.buf.add_workspace_folder)
+	map_key('n', '<space>wr', vim.lsp.buf.remove_workspace_folder)
+	map_key('n', '<space>wl', function()
+		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	end)
+	map_key('n', '<space>D', vim.lsp.buf.type_definition)
+	map_key('n', '<space>rn', vim.lsp.buf.rename)
+	map_key('n', '<space>ca', vim.lsp.buf.code_action)
+	map_key('n', ',f', function()
+		vim.lsp.buf.format { async = true }
+	end)
 
 	-- Language Specific
 	client.server_capabilities.document_formatting = true
@@ -106,10 +105,16 @@ local function setup()
 
 	local packages = require('mason-lspconfig').get_installed_servers()
 	local lspconfig = require('lspconfig')
+
 	for _, ls in pairs(packages) do
 		local opts = make_config(ls)
 		lspconfig[ls].setup(opts)
 	end
+
+	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+	vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+	vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 	vim.g.vsnip_filetypes = {
 		typescriptreact = { 'typescript' },
