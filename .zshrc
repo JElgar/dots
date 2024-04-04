@@ -23,6 +23,7 @@ ZSH_THEME="robbyrussell"
 if [ "$TMUX" = "" ]; then tmux new -As0; fi
 
 export FLUTTER_ROOT="$HOME/Documents/dev/flutter/bin"
+export CHROME_EXECUTABLE="/bin/google-chrome-stable"
 export ANDROID_HOME="$HOME/Android/Sdk"
 
 path+=("$HOME/Documents/dev/flutter/bin")
@@ -124,6 +125,7 @@ plugins=(
   # zsh-syntax-highlighting
   # zsh-autosuggestions
   z
+  dotenv
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -209,3 +211,7 @@ esac
 # pnpm end
 
 if [ -e /home/jelgar/.nix-profile/etc/profile.d/nix.sh ]; then . /home/jelgar/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# add Pulumi to the PATH
+export PATH=$PATH:$HOME/.pulumi/bin
+autoload -Uz compinit && compinit -i
