@@ -13,6 +13,16 @@ return {
                 dotfiles = true,
             },
         })
+
+		local function locate_file()
+			local api = require "nvim-tree.api"
+			local file_path = vim.api.nvim_buf_get_name(0)
+
+			api.tree.open()
+			api.tree.find_file(file_path)
+		end
+
+		vim.keymap.set("n", "<leader>fl", locate_file, { noremap = true })
 	end,
 	keybindings = function (bindkey)
 		bindkey("n", "<leader>fd", "<cmd>NvimTreeToggle<Enter>")
