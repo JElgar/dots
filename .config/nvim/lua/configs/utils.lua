@@ -6,6 +6,7 @@ return {
             "kylechui/nvim-surround",
             tag = "*", -- Use for stability; omit to use `main` branch for the latest features
         })
+        use "tpope/vim-sleuth"
 
     end,
     setup = function()

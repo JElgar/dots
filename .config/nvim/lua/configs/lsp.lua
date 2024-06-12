@@ -98,7 +98,7 @@ local function setup()
 	-- Setup mason (lsp installer)
 	require('mason').setup()
 	require('mason-lspconfig').setup({
-		ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'pyright', 'tsserver' }
+		ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'pyright', 'tsserver', 'yamlls' }
 	})
 
 	setup_cmp()

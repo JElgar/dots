@@ -60,6 +60,11 @@ local function setup()
                 require("telescope.themes").get_dropdown {}
             }
         },
+		pickers = {
+			find_files = {
+				hidden = true,
+			}
+		},
     })
 
     local extensions = { "themes", "terms" }
