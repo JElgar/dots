@@ -121,58 +121,62 @@ local function setup()
 		javascriptreact = { 'javascript' },
 	}
 
-    -- Metals config setup
-    local metals_config = require("metals").bare_config()
-    metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+	-- Metals config setup
+	local metals_config = require("metals").bare_config()
+	metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    -- Autocmd that will actually be in charging of starting the whole thing
-    local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-    vim.api.nvim_create_autocmd("FileType", {
-      -- NOTE: You may or may not want java included here. You will need it if you
-      -- want basic Java support but it may also conflict if you are using
-      -- something like nvim-jdtls which also works on a java filetype autocmd.
-      pattern = { "scala", "sbt", "java" },
-      callback = function()
-        require("metals").initialize_or_attach(metals_config)
-      end,
-      group = nvim_metals_group,
-    })
+	-- Autocmd that will actually be in charging of starting the whole thing
+	local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+	vim.api.nvim_create_autocmd("FileType", {
+		-- NOTE: You may or may not want java included here. You will need it if you
+		-- want basic Java support but it may also conflict if you are using
+		-- something like nvim-jdtls which also works on a java filetype autocmd.
+		pattern = { "scala", "sbt", "java" },
+		callback = function()
+			require("metals").initialize_or_attach(metals_config)
+		end,
+		group = nvim_metals_group,
+	})
 
-    -- YAML Setup
-    lspconfig.yamlls.setup {
-      settings = {
-        yaml = {
-          schemas = {
-            kubernetes = "*.yaml",
-            ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-            ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-            ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-            ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-            ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-            ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
-            ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-            ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
-            ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-            ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
-            ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
-            ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
-          },
-        },
-      }
-    }
+	-- YAML Setup
+	lspconfig.yamlls.setup {
+		settings = {
+			yaml = {
+				schemas = {
+					kubernetes = "*.yaml",
+					["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+					["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+					["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+					["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+					["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+					["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+					["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+					["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+					["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+					["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+					["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+					["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+				},
+			},
+		}
+	}
 end
 
 return {
-	on_attach = on_attach,
-	packages = function(use)
-		use {
-			-- LSP
-			'neovim/nvim-lspconfig',
+	-- LSP
+	{
+		'neovim/nvim-lspconfig',
+		dependencies = {
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
+		},
+		init = setup,
+	},
 
-			-- Complete
-			'hrsh7th/nvim-cmp',
+	-- Complete
+	{
+		'hrsh7th/nvim-cmp',
+		dependencies = {
 			'hrsh7th/cmp-nvim-lsp',
 			'hrsh7th/cmp-nvim-lua',
 			'hrsh7th/cmp-buffer',
@@ -181,8 +185,51 @@ return {
 			'hrsh7th/vim-vsnip',
 			'hrsh7th/vim-vsnip-integ',
 			'rafamadriz/friendly-snippets',
+
 		}
-        use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
-	end,
-	setup = setup,
+	},
+
+	{
+		'scalameta/nvim-metals',
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+
+	{
+		'akinsho/flutter-tools.nvim',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'stevearc/dressing.nvim',
+		},
+		init         = function()
+			require("flutter-tools").setup({
+				flutter_path = "/usr/bin/flutter/bin/flutter",
+				lsp = {
+					on_attach = on_attach
+				}
+			})
+		end,
+	},
+
+	{
+		'simrat39/rust-tools.nvim',
+		init = function()
+			local rt = require("rust-tools")
+			rt.setup({
+				server = {
+					on_attach = function(client, bufnr)
+						lsp.on_attach(client, bufnr)
+
+						-- Hover actions
+						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions,
+							{ buffer = bufnr })
+						-- Code action groups
+						vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group,
+							{ buffer = bufnr })
+						vim.keymap.set("n", "<Leader>z", rt.expand_macro.expand_macro,
+							{ buffer = bufnr })
+					end,
+				},
+			})
+		end,
+	}
 }

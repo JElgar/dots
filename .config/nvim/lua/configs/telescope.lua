@@ -1,14 +1,5 @@
 local function make_defaults()
     return {
-        vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-        },
         mappings = {
             i = {
                 ["jk"] = require('telescope.actions').close,
@@ -53,21 +44,22 @@ local function make_defaults()
 end
 
 local function setup()
-    require("telescope").setup({
+    local telescope = require("telescope")
+    telescope.setup({
         defaults = make_defaults(),
-          extensions = {
+        extensions = {
             ["ui-select"] = {
                 require("telescope.themes").get_dropdown {}
             }
         },
-		pickers = {
-			find_files = {
-				hidden = true,
-			}
-		},
+        pickers = {
+            find_files = {
+                hidden = true,
+            }
+        },
     })
 
-    local extensions = { "themes", "terms" }
+    local extensions = { "themes", "terms", "flutter" }
 
     pcall(function()
         for _, ext in ipairs(extensions) do
@@ -78,22 +70,16 @@ local function setup()
     require("telescope").load_extension("ui-select")
 end
 
-local function keybindings(bindkey)
-    bindkey("n", "gr", "<cmd> Telescope lsp_references<cr>")
-    bindkey("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<cr>")
-    bindkey("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<cr>")
-    bindkey("n", "<leader>fb", "<cmd>lua require('telescope.builtin').buffers()<cr>")
-    bindkey("n", "<leader>fh", "<cmd>lua require('telescope.builtin').help_tags()<cr>")
-    bindkey("n", "<leader>fc", "<cmd>lua require('telescope.actions').close()<cr>")
-end
-
 return {
-    packages = function(use)
-        use {
-            'nvim-telescope/telescope.nvim', tag = '0.1.5',
-            requires = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' }
-        }
-    end,
-    setup = setup,
-    keybindings = keybindings,
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.7',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
+    init = setup,
+    keys = {
+        { "gr",         "<cmd> Telescope lsp_references<cr>",                     mode = "n" },
+        { "<leader>ff", require('telescope.builtin').find_files, mode = "n" },
+        { "<leader>fg", require('telescope.builtin').live_grep,  mode = "n" },
+        { "<leader>fb", require('telescope.builtin').buffers,    mode = "n" },
+        { "<leader>fh", require('telescope.builtin').help_tags,  mode = "n" },
+    }
 }
