@@ -94,11 +94,47 @@ local function make_config(server_name)
 	return c
 end
 
+local function setupAmazon()
+	bemol = function()
+		local bemol_dir = vim.fs.find({ '.bemol' }, { upward = true, type = 'directory' })[1]
+		local ws_folders_lsp = {}
+		if bemol_dir then
+			local file = io.open(bemol_dir .. '/ws_root_folders', 'r')
+			if file then
+				for line in file:lines() do
+					table.insert(ws_folders_lsp, line)
+				end
+				file:close()
+			end
+		end
+
+		for _, line in ipairs(ws_folders_lsp) do
+			vim.lsp.buf.add_workspace_folder(line)
+		end
+	end
+
+	local lspconfig = require('lspconfig')
+	lspconfig.jdtls.setup({
+		on_attach = function(client, bufnr)
+			on_attach(client, bufnr)
+			bemol()
+		end,
+		-- cmd = {
+		-- 	"jdtls", -- need to be on your PATH
+		-- 	"--jvm-arg=-javaagent:" .. os.getenv("HOME") .. "/Developer/lombok.jar", -- need for lombok magic
+		-- 	"-data",
+		-- 	eclipse_workspace,
+		-- },
+	})
+end
+
 local function setup()
+	require("fidget").setup({})
+
 	-- Setup mason (lsp installer)
 	require('mason').setup()
 	require('mason-lspconfig').setup({
-		ensure_installed = { 'sumneko_lua', 'rust_analyzer@nightly', 'pyright', 'tsserver', 'yamlls' }
+		ensure_installed = { 'pyright', 'ts_ls', 'yamlls', 'tailwindcss' }
 	})
 
 	setup_cmp()
@@ -160,6 +196,17 @@ local function setup()
 			},
 		}
 	}
+
+	lspconfig.tailwindcss.setup {
+		filetypes = { "typescriptreact", "javascriptreact", "rust", "html" },
+		settings = {
+			includeLanguages = {
+				rust = "html",
+			},
+		},
+	}
+
+	setupAmazon()
 end
 
 return {
@@ -169,6 +216,7 @@ return {
 		dependencies = {
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
+			"j-hui/fidget.nvim",
 		},
 		init = setup,
 	},
@@ -202,9 +250,44 @@ return {
 		},
 		init         = function()
 			require("flutter-tools").setup({
-				flutter_path = "/usr/bin/flutter/bin/flutter",
+				-- flutter_path = "/usr/bin/flutter/bin/flutter",
 				lsp = {
 					on_attach = on_attach
+				},
+				debugger = {
+					enabled = true,
+					register_configurations = function(paths)
+						local dap = require("dap")
+
+						dap.configurations.dart = {
+							{
+								type = "dart",
+								request = "launch",
+								name = "Launch flutter",
+								dartSdkPath = paths.dart_sdk,
+								flutterSdkPath = paths.flutter_sdk,
+								program = "${workspaceFolder}/lib/main.dart",
+								cwd = "${workspaceFolder}",
+								toolArgs = { "-d", "chrome", "--web-port", "5050" }
+							},
+							{
+								type = "dart",
+								request = "attach",
+								name = "Attach flutter",
+								dartSdkPath = paths.dart_sdk,
+								flutterSdkPath = paths.flutter_sdk,
+								program = "${workspaceFolder}/lib/main.dart",
+								cwd = "${workspaceFolder}",
+								toolArgs = { "-d", "chrome", "--web-port", "5050" }
+							}
+						}
+
+						dap.adapaters.dart = {
+							args = { "debug-adapter" },
+							command = paths.flutter_bin,
+							type = "executable"
+						}
+					end
 				}
 			})
 		end,
@@ -217,7 +300,7 @@ return {
 			rt.setup({
 				server = {
 					on_attach = function(client, bufnr)
-						lsp.on_attach(client, bufnr)
+						on_attach(client, bufnr)
 
 						-- Hover actions
 						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions,

@@ -1,10 +1,47 @@
+return {
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"theHamsta/nvim-dap-virtual-text",
+		},
+		init = function()
+			local dap = require("dap")
+			local ui = require("dapui")
+
+			ui.setup()
+			require("nvim-dap-virtual-text").setup()
+
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				ui.open()
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				ui.close()
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				ui.close()
+			end
+		end,
+		keys = {
+			{ "<leader>do", function() require('dapui').open() end,                    mode = "" },
+			{ "<leader>dq", function() require('dapui').close() end,                   mode = "" },
+			{ "<leader>dc", function() require('dap').continue() end,                  mode = "" },
+			{ "<leader>db", function() require('dap').toggle_breakpoint() end,         mode = "" },
+			{ "<leader>dg", function() require('dap').run_to_cursor() end,             mode = "" },
+			{ "<leader>ds", function() require('dap').step_over() end,                 mode = "" },
+			{ "<leader>di", function() require('dap').step_into() end,                 mode = "" },
+			{ "<leader>de", function() require('dapui').eval(nil, { enter = true }) end, mode = "" },
+		}
+	}
+}
+
 -- return {
 --     packages = function(use)
 --         use {
 --             'mfussenegger/nvim-dap',
 --             { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
 --         }
--- 
+--
 --         -- There is currently no support for vscode-js-debug in Mason, once
 --         -- there is this should no longer be required.
 --         use {
@@ -17,9 +54,9 @@
 --     setup = function()
 --         local mason_registry = require("mason-registry")
 --         local debugpy = mason_registry.get_package("debugpy")
--- 
+--
 --         local dap = require('dap')
--- 
+--
 --         -- Python dap
 --         dap.adapters.python = {
 --             type = 'executable',
@@ -36,7 +73,7 @@
 --                 end;
 --             },
 --         }
--- 
+--
 --         -- Js dap
 --         require("dap-vscode-js").setup({
 --             -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
@@ -61,10 +98,10 @@
 --                 }
 --             }
 --         end
--- 
+--
 --         local dapui = require('dapui')
 --         dapui.setup()
--- 
+--
 --         dap.listeners.after.event_initialized["dapui_config"] = function()
 --             dapui.open()
 --         end
@@ -85,4 +122,3 @@
 --         bindkey("", "<leader>de", "<cmd>lua require('dapui').eval()<cr>")
 --     end,
 -- }
-return {}

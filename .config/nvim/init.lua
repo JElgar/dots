@@ -1,3 +1,5 @@
+vim.opt.termguicolors = true
+
 vim.g.mapleader = ' '
 vim.keymap.set('i', 'jk', '<Esc>')
 vim.keymap.set('x', '<leader>p', '"_dP')
@@ -37,3 +39,10 @@ vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 vim.opt.expandtab = false
 vim.opt.list = true
+
+-- https://neovim.io/doc/user/options.html#'exrc'
+vim.opt.exrc = true
+
+-- Line numbers
+vim.o.relativenumber = true
+vim.o.number = true

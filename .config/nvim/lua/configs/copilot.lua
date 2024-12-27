@@ -8,5 +8,6 @@ return {
                                 { expr = true })
                         vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
                 end,
+                enabled=false,
         }
 }

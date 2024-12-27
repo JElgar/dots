@@ -8,9 +8,10 @@ return {
 			"sindrets/diffview.nvim",
 			"nvim-telescope/telescope.nvim",
 		},
+		init = function()
+			require('gitsigns').setup()
+			require('neogit').setup()
+		end,
+		config = true,
 	},
-	init = function()
-		require('gitsigns').setup()
-		require('neogit').setup()
-	end,
 }
