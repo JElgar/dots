@@ -13,5 +13,9 @@ return {
 			require('neogit').setup()
 		end,
 		config = true,
+		opts = {
+			graph_style = "kitty",
+			diffview = true,
+		}
 	},
 }

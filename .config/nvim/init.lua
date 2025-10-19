@@ -31,12 +31,11 @@ require('lazy').setup({
 })
 
 vim.opt.mouse = 'a'
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
 
 -- Tabs
 vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 vim.opt.list = true
 

@@ -67,13 +67,14 @@ local function setup()
         end
     end)
 
-    require("telescope").load_extension("ui-select")
+    telescope.load_extension("ui-select")
+    telescope.load_extension("live_grep_args")
 end
 
 return {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.8',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-ui-select.nvim', "nvim-telescope/telescope-live-grep-args.nvim" },
     init = setup,
     keys = {
         { "gr",         "<cmd> Telescope lsp_references<cr>",                     mode = "n" },
@@ -81,5 +82,6 @@ return {
         { "<leader>fg", require('telescope.builtin').live_grep,  mode = "n" },
         { "<leader>fb", require('telescope.builtin').buffers,    mode = "n" },
         { "<leader>fh", require('telescope.builtin').help_tags,  mode = "n" },
+        -- { "<leader>fr", require("telescope").extensions.live_grep_args.live_grep_args,  mode = "n" },
     }
 }

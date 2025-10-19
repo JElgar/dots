@@ -9,6 +9,7 @@ return {
 
       -- Language specific dependencies
       "haydenmeade/neotest-jest",
+      "marilari88/neotest-vitest",
       "nvim-neotest/neotest-python",
       "rouge8/neotest-rust",
       "sidlatau/neotest-dart",
@@ -25,6 +26,7 @@ return {
           require("neotest-python"),
           -- Requires installing nextest https://nexte.st/docs/installation/from-source/
           require("neotest-rust"),
+          require("neotest-vitest"),
           require("neotest-jest")({
             jestCommand = "npm test --",
             jestConfigFile = "custom.jest.config.ts",

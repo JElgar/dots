@@ -94,38 +94,31 @@ local function make_config(server_name)
 	return c
 end
 
-local function setupAmazon()
-	bemol = function()
-		local bemol_dir = vim.fs.find({ '.bemol' }, { upward = true, type = 'directory' })[1]
-		local ws_folders_lsp = {}
-		if bemol_dir then
-			local file = io.open(bemol_dir .. '/ws_root_folders', 'r')
-			if file then
-				for line in file:lines() do
-					table.insert(ws_folders_lsp, line)
-				end
-				file:close()
-			end
-		end
+function setup_amazon()
+ local bemol_dir = vim.fs.find({ '.bemol' }, { upward = true, type = 'directory'})[1]
+ local ws_folders_lsp = {}
+ if bemol_dir then
+  local file = io.open(bemol_dir .. '/ws_root_folders', 'r')
+  if file then
 
-		for _, line in ipairs(ws_folders_lsp) do
-			vim.lsp.buf.add_workspace_folder(line)
-		end
-	end
+   for line in file:lines() do
+    table.insert(ws_folders_lsp, line)
+   end
+   file:close()
+  end
+ end
 
-	local lspconfig = require('lspconfig')
-	lspconfig.jdtls.setup({
-		on_attach = function(client, bufnr)
-			on_attach(client, bufnr)
-			bemol()
-		end,
-		-- cmd = {
-		-- 	"jdtls", -- need to be on your PATH
-		-- 	"--jvm-arg=-javaagent:" .. os.getenv("HOME") .. "/Developer/lombok.jar", -- need for lombok magic
-		-- 	"-data",
-		-- 	eclipse_workspace,
-		-- },
-	})
+ for _, line in ipairs(ws_folders_lsp) do
+  vim.lsp.buf.add_workspace_folder(line)
+ end
+
+  vim.lsp.config.barium = {
+    cmd = { 'barium' },
+    root_markers = { 'Config' },
+    filetypes = { 'brazil-config' },
+  }
+  vim.filetype.add({ filename = { Config = "brazil-config" } })
+  vim.lsp.enable("barium")
 end
 
 local function setup()
@@ -134,6 +127,7 @@ local function setup()
 	-- Setup mason (lsp installer)
 	require('mason').setup()
 	require('mason-lspconfig').setup({
+		-- ensure_installed = { 'pyright', 'ts_ls', 'yamlls', 'tailwindcss' }
 		ensure_installed = { 'pyright', 'ts_ls', 'yamlls', 'tailwindcss' }
 	})
 
@@ -206,7 +200,7 @@ local function setup()
 		},
 	}
 
-	setupAmazon()
+	setup_amazon()
 end
 
 return {
@@ -248,51 +242,48 @@ return {
 			'nvim-lua/plenary.nvim',
 			'stevearc/dressing.nvim',
 		},
-		init         = function()
-			require("flutter-tools").setup({
-				-- flutter_path = "/usr/bin/flutter/bin/flutter",
-				lsp = {
-					on_attach = on_attach
-				},
-				debugger = {
-					enabled = true,
-					register_configurations = function(paths)
-						local dap = require("dap")
+		opts = {
+			-- flutter_path = "/usr/bin/flutter/bin/flutter",
+			lsp = {
+				on_attach = on_attach
+			},
+			debugger = {
+				enabled = true,
+				register_configurations = function(paths)
+					local dap = require("dap")
 
-						dap.configurations.dart = {
-							{
-								type = "dart",
-								request = "launch",
-								name = "Launch flutter",
-								dartSdkPath = paths.dart_sdk,
-								flutterSdkPath = paths.flutter_sdk,
-								program = "${workspaceFolder}/lib/main.dart",
-								cwd = "${workspaceFolder}",
-								toolArgs = { "-d", "chrome", "--web-port", "5050" }
-							},
-							{
-								type = "dart",
-								request = "attach",
-								name = "Attach flutter",
-								dartSdkPath = paths.dart_sdk,
-								flutterSdkPath = paths.flutter_sdk,
-								program = "${workspaceFolder}/lib/main.dart",
-								cwd = "${workspaceFolder}",
-								toolArgs = { "-d", "chrome", "--web-port", "5050" }
-							}
+					dap.configurations.dart = {
+						{
+							type = "dart",
+							request = "launch",
+							name = "Launch flutter",
+							dartSdkPath = paths.dart_sdk,
+							flutterSdkPath = paths.flutter_sdk,
+							program = "${workspaceFolder}/lib/main.dart",
+							cwd = "${workspaceFolder}",
+							toolArgs = { "-d", "chrome", "--web-port", "5050" }
+						},
+						{
+							type = "dart",
+							request = "attach",
+							name = "Attach flutter",
+							dartSdkPath = paths.dart_sdk,
+							flutterSdkPath = paths.flutter_sdk,
+							program = "${workspaceFolder}/lib/main.dart",
+							cwd = "${workspaceFolder}",
+							toolArgs = { "-d", "chrome", "--web-port", "5050" }
 						}
+					}
 
-						dap.adapaters.dart = {
-							args = { "debug-adapter" },
-							command = paths.flutter_bin,
-							type = "executable"
-						}
-					end
-				}
-			})
-		end,
+					dap.adapaters.dart = {
+						args = { "debug-adapter" },
+						command = paths.flutter_bin,
+						type = "executable"
+					}
+				end
+			}
+		},
 	},
-
 	{
 		'simrat39/rust-tools.nvim',
 		init = function()

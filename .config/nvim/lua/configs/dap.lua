@@ -4,9 +4,39 @@ return {
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"theHamsta/nvim-dap-virtual-text",
+			{ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
 		},
 		init = function()
 			local dap = require("dap")
+
+			-- Js dap
+			require("dap-vscode-js").setup({
+				-- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+				-- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
+				debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
+				debugger_cmd = { 'js-debug-adapter' },
+				adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+			})
+
+			for _, language in ipairs({ "typescript", "javascript" }) do
+				require("dap").configurations[language] = {
+					{
+						type = "pwa-node",
+						request = "launch",
+						name = "Launch file",
+						program = "${file}",
+						cwd = "${workspaceFolder}",
+					},
+					{
+						type = "pwa-node",
+						request = "attach",
+						name = "Attach",
+						processId = require 'dap.utils'.pick_process,
+						cwd = "${workspaceFolder}",
+					}
+				}
+			end
+
 			local ui = require("dapui")
 
 			ui.setup()
@@ -23,13 +53,13 @@ return {
 			end
 		end,
 		keys = {
-			{ "<leader>do", function() require('dapui').open() end,                    mode = "" },
-			{ "<leader>dq", function() require('dapui').close() end,                   mode = "" },
-			{ "<leader>dc", function() require('dap').continue() end,                  mode = "" },
-			{ "<leader>db", function() require('dap').toggle_breakpoint() end,         mode = "" },
-			{ "<leader>dg", function() require('dap').run_to_cursor() end,             mode = "" },
-			{ "<leader>ds", function() require('dap').step_over() end,                 mode = "" },
-			{ "<leader>di", function() require('dap').step_into() end,                 mode = "" },
+			{ "<leader>do", function() require('dapui').open() end,                      mode = "" },
+			{ "<leader>dq", function() require('dapui').close() end,                     mode = "" },
+			{ "<leader>dc", function() require('dap').continue() end,                    mode = "" },
+			{ "<leader>db", function() require('dap').toggle_breakpoint() end,           mode = "" },
+			{ "<leader>dg", function() require('dap').run_to_cursor() end,               mode = "" },
+			{ "<leader>ds", function() require('dap').step_over() end,                   mode = "" },
+			{ "<leader>di", function() require('dap').step_into() end,                   mode = "" },
 			{ "<leader>de", function() require('dapui').eval(nil, { enter = true }) end, mode = "" },
 		}
 	}
