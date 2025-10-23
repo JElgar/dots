@@ -20,7 +20,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 
 # Startup Commands
-if [ "$TMUX" = "" ]; then tmux new -As0; fi
+if [ "$TMUX" = "" ] && [ "$TERM_PROGRAM" != "vscode" ]; then tmux new -As0; fi
 
 export FLUTTER_ROOT="$HOME/Documents/dev/flutter/bin"
 export CHROME_EXECUTABLE="/bin/google-chrome-stable"
@@ -40,6 +40,7 @@ path+=("$HOME/.config/scripts")
 path+=("$HOME/.local/share/gem/ruby/3.0.0/bin")
 path+=("/usr/local/go/bin")
 path+=("$HOME/.pub-cache/bin")
+path+=("$HOME/.local/bin")
 
 # path+=('/home/james/Development/elm/bin')
 export PATH
@@ -48,10 +49,18 @@ export LD_LIBRARY_PATH=/usr/local/include:$LD_LIBRARY_PATH
 
 export npm_config_prefix=~/.node_modules
 
+# ZVM
+# https://github.com/jeffreytse/zsh-vi-mode?tab=readme-ov-file#-usage
+zvm_config() {
+    ZVM_VI_ESCAPE_BINDKEY=jk
+    ZVM_VI_INSERT_ESCAPE_BINDKEY=$ZVM_VI_ESCAPE_BINDKEY
+    ZVM_VI_VISUAL_ESCAPE_BINDKEY=$ZVM_VI_ESCAPE_BINDKEY
+    ZVM_VI_OPPEND_ESCAPE_BINDKEY=$ZVM_VI_ESCAPE_BINDKEY
+}
+
 # Set defualt editor to nvim
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -125,7 +134,8 @@ plugins=(
   # zsh-syntax-highlighting
   # zsh-autosuggestions
   z
-  dotenv
+  # dotenv
+  zsh-vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -184,7 +194,7 @@ alias logisim="java -jar ~/CS/ComputerArchitecture/Logisim/logisim-generic-2.7.1
 alias y2="cd ~/Documents/uni/Year2/"
 alias c="xclip"
 alias e="emacs -nw"
-alias ls="exa"
+alias ls="eza"
 alias config='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias bl='xbacklight -set'
 export PATH="$HOME/.rbenv/bin:$PATH"
